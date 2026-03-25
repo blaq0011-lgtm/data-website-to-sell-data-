@@ -185,7 +185,25 @@
         </div>
       </div>
 
-      <!-- RE        </table>
+      <!-- RECENT ACTIVITY -->
+      <div class="tx-table-container">
+        <div style="padding: 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222;">
+          <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700;">Recent Activity</h3>
+          <button onclick="showSection('transactions')" style="background: none; border: none; color: #2563eb; font-weight: 700; font-size: 0.85rem; cursor: pointer;">View All Activity →</button>
+        </div>
+        <table class="dark-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="overview-tx-body">
+            <!-- Dynamic recent activity -->
+          </tbody>
+        </table>
       </div>
     </div>
     </div>
@@ -424,16 +442,31 @@
     
     // Transactions
     const txs = smartData.getTransactions();
-    const txBody = document.getElementById('tx-table-body');
+    const txBody = document.getElementById('tx-table-body'); // Main transactions table
+    const overviewTxBody = document.getElementById('overview-tx-body'); // Overview recent activity table
+
+    const transactionRows = txs.length ? txs.map(t => `
+        <tr>
+            <td>${t.description}</td>
+            <td><span style="background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:4px; font-size:0.75rem;">${t.type}</span></td>
+            <td style="color:${t.amount < 0 ? '#ff4d4d' : '#4ade80'}; font-weight:700;">${t.amount < 0 ? '' : '+'}${t.amount}</td>
+            <td>${t.date}</td>
+        </tr>
+    `).join('') : '<tr><td colspan="4" class="tx-empty">No transactions found.</td></tr>';
+
     if (txBody) {
-        txBody.innerHTML = txs.length ? txs.map(t => `
+        txBody.innerHTML = transactionRows;
+    }
+    if (overviewTxBody) {
+        // For overview, maybe show only a limited number of recent transactions
+        overviewTxBody.innerHTML = txs.slice(0, 5).map(t => `
             <tr>
                 <td>${t.description}</td>
                 <td><span style="background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:4px; font-size:0.75rem;">${t.type}</span></td>
                 <td style="color:${t.amount < 0 ? '#ff4d4d' : '#4ade80'}; font-weight:700;">${t.amount < 0 ? '' : '+'}${t.amount}</td>
                 <td>${t.date}</td>
             </tr>
-        `).join('') : '<tr><td colspan="4" class="tx-empty">No transactions found.</td></tr>';
+        `).join('') || '<tr><td colspan="4" class="tx-empty">No recent activity.</td></tr>';
     }
 
     // Orders
