@@ -128,11 +128,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M22 10h-2c-1.1 0-2 .9-2 2s.9 2 2 2h2"/><path d="M7 12h.01"/></svg>
       Wallet Top-up
     </a>
-    <a href="#" onclick="showSection('rewards')" id="link-rewards" class="side-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-      Rewards
-      <span class="badge-new">NEW</span>
-    </a>
+    
     
     <div class="sidebar-divider"></div>
     
@@ -146,101 +142,76 @@
     </a>
   </aside>
 
-  <main class="dash-main">
-    <div id="section-overview">
-      <div class="dash-top">
+  <main class="dash-    <div id="section-overview" style="background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+      <div class="tx-header">
+        <h1 class="tx-title">Good morning, <span id="userNameHello">User</span> 👋</h1>
+        <p class="tx-sub">Here's your account overview for today.</p>
+      </div>
+
+      <!-- PREMIUM WALLET CARD -->
+      <div class="tx-wallet-card" style="margin-bottom: 30px;">
         <div>
-          <h1 style="font-size:1.35rem;font-weight:800;">Good morning, <span id="userNameHello">User</span> 👋</h1>
-          <p style="color:var(--gray-600);font-size:0.88rem;">Here's your account overview.</p>
+          <div class="tx-wallet-label">Total Wallet Balance</div>
+          <div class="tx-wallet-value">₵1,240.50</div>
         </div>
-        <a href="buy-data.html" class="btn btn-primary">+ Buy Data Bundle</a>
-      </div>
-
-    <!-- WALLET -->
-    <div class="wallet-card">
-      <div>
-        <div class="wallet-label">Wallet Balance</div>
-        <div class="wallet-balance">₵1,240.50</div>
-        <div class="wallet-actions">
-          <button class="wbtn wbtn-green">+ Fund Wallet</button>
-          <button class="wbtn wbtn-white">↗ Transfer</button>
+        <div class="tx-wallet-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M16 12h4"/><path d="M3 11l18 0"/>
+          </svg>
         </div>
       </div>
-      <div style="text-align:right;">
-        <div class="wallet-label">Account ID</div>
-        <div style="font-size:0.9rem;font-weight:600;opacity:0.85;">SND-00412</div>
-        <div style="margin-top:12px;"><span class="badge badge-green" style="background:rgba(34,197,94,0.2);color:#4ade80;">● Active</span></div>
-      </div>
-    </div>
 
-    <!-- QUICK ACTIONS -->
-    <div class="qa-grid">
-      <a href="buy-data.html" class="qa-card"><span class="qa-icon">📶</span><div class="qa-label">Buy Data</div></a>
-      <div class="qa-card"><span class="qa-icon">💵</span><div class="qa-label">Fund Wallet</div></div>
-      <div class="qa-card"><span class="qa-icon">📜</span><div class="qa-label">History</div></div>
-      <div class="qa-card"><span class="qa-icon">🎁</span><div class="qa-label">Refer &amp; Earn</div></div>
-    </div>
+      <!-- STATS GRID -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px;">
+        <div style="background: #1a1a1a; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+          <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">Total Spent</div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #fff;">GH₵ 820.00</div>
+          <div style="color: #4ade80; font-size: 0.8rem; margin-top: 8px;">↑ 12.5% this month</div>
+        </div>
+        <div style="background: #1a1a1a; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+          <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">Bundles Bought</div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #fff;">34</div>
+          <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-top: 8px;">All-time usage</div>
+        </div>
+        <div style="background: #1a1a1a; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+          <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">Referral Bonus</div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #fbbf24;">GH₵ 45.00</div>
+          <div style="color: #2563eb; font-size: 0.8rem; margin-top: 8px;">3 successful invites</div>
+        </div>
+      </div>
 
-    <!-- STATS -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Total Spent</div>
-        <div class="stat-value">GHC 820</div>
-        <div class="stat-sub" style="color:var(--green);">↑ 12% this month</div>
+      <!-- RECENT ACTIVITY -->
+      <div class="tx-table-container">
+        <div style="padding: 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222;">
+          <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700;">Recent Activity</h3>
+          <button onclick="showSection('transactions')" style="background: none; border: none; color: #2563eb; font-weight: 700; font-size: 0.85rem; cursor: pointer;">View All Activity →</button>
+        </div>
+        <table class="dark-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10GB Bundle (0241234567)</td>
+              <td>Bundle</td>
+              <td style="color: #fff; font-weight: 700;">-GH₵ 35.00</td>
+              <td><span style="color: #4ade80; background: rgba(74,222,128,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">Success</span></td>
+            </tr>
+            <tr>
+              <td>Wallet Top-up (MoMo)</td>
+              <td>Deposit</td>
+              <td style="color: #fbbf24; font-weight: 700;">+GH₵ 200.00</td>
+              <td><span style="color: #4ade80; background: rgba(74,222,128,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">Success</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Bundles Bought</div>
-        <div class="stat-value">34</div>
-        <div class="stat-sub" style="color:var(--gray-400);">All time</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Referral Bonus</div>
-        <div class="stat-value">GHC 45</div>
-        <div class="stat-sub" style="color:var(--blue-light);">3 referrals</div>
-      </div>
-    </div>
-
-    <!-- TRANSACTIONS -->
-    <div class="card" style="padding:0;overflow:hidden;">
-      <div style="padding:18px 22px;border-bottom:1px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center;">
-        <h3 style="font-size:1rem;font-weight:700;">Recent Transactions</h3>
-        <a href="#" style="font-size:0.82rem;color:var(--blue-light);font-weight:600;text-decoration:none;">View All →</a>
-      </div>
-      <table class="tx-table">
-        <thead>
-          <tr><th>Description</th><th>Network</th><th>Amount</th><th>Date</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>10GB Bundle</strong><br><small style="color:var(--gray-400);">0241234567</small></td>
-            <td><span class="badge badge-blue">MTN</span></td>
-            <td><strong>GHC 35.00</strong></td>
-            <td style="color:var(--gray-400);">25 Mar 2025</td>
-            <td><span class="badge badge-green">Success</span></td>
-          </tr>
-          <tr>
-            <td><strong>Wallet Top-up</strong><br><small style="color:var(--gray-400);">MoMo Pay</small></td>
-            <td>–</td>
-            <td><strong style="color:var(--green);">+GHC 200.00</strong></td>
-            <td style="color:var(--gray-400);">24 Mar 2025</td>
-            <td><span class="badge badge-green">Success</span></td>
-          </tr>
-          <tr>
-            <td><strong>5GB Bundle</strong><br><small style="color:var(--gray-400);">0551234567</small></td>
-            <td><span class="badge badge-red">Vodafone</span></td>
-            <td><strong>GHC 20.00</strong></td>
-            <td style="color:var(--gray-400);">23 Mar 2025</td>
-            <td><span class="badge badge-green">Success</span></td>
-          </tr>
-          <tr>
-            <td><strong>20GB Bundle</strong><br><small style="color:var(--gray-400);">0271234567</small></td>
-            <td><span class="badge" style="background:#ede9fe;color:#7c3aed;">AirtelTigo</span></td>
-            <td><strong>GHC 60.00</strong></td>
-            <td style="color:var(--gray-400);">20 Mar 2025</td>
-            <td><span class="badge badge-red">Failed</span></td>
-          </tr>
-        </tbody>
-      </table>
+    </div>  </table>
       </div>
     </div>
 
