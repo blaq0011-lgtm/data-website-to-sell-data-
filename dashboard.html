@@ -189,5 +189,21 @@
     </div>
   </main>
 </div>
+<script>
+  function showSection(id) {
+    document.getElementById('section-overview').style.display = (id === 'overview' ? 'block' : 'none');
+    document.getElementById('section-transactions').style.display = (id === 'transactions' ? 'block' : 'none');
+    
+    document.getElementById('link-overview').classList.toggle('active', id === 'overview');
+    document.getElementById('link-transactions').classList.toggle('active', id === 'transactions');
+  }
+
+  const user = auth.getUser();
+  if (user) {
+    document.getElementById('userNameTop').textContent = '👤 ' + user.name;
+    const hello = document.getElementById('userNameHello');
+    if (hello) hello.textContent = user.name;
+  }
+</script>
 </body>
 </html>
