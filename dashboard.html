@@ -43,6 +43,23 @@
     .tx-table tr:hover td { background: var(--gray-50); }
     .tx-table tr:hover td { background: var(--gray-50); }
 
+    /* BUY DATA TAB STYLES */
+    .buy-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+    .network-selector { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .net-card { flex: 1; min-width: 80px; border: 2px solid var(--gray-200); border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); }
+    .net-card:hover { border-color: var(--blue-light); }
+    .net-card.active { border-color: var(--blue-light); background: #eff3ff; }
+    .net-card .net-logo { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+    .net-card .net-name { font-size: 0.75rem; font-weight: 700; }
+    .bundle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .b-card { border: 2px solid var(--gray-200); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; background: var(--white); position: relative; }
+    .b-card:hover, .b-card.selected { border-color: var(--blue-light); background: #eff3ff; }
+    .b-card.selected::after { content: '✓'; position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; background: var(--blue-light); color: white; border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+    .b-card .size { font-size: 1.2rem; font-weight: 800; color: var(--text); }
+    .b-card .price { font-size: 0.95rem; font-weight: 700; color: var(--blue-light); margin-top: 4px; }
+    .summary-card-small { background: var(--navy); color: var(--white); border-radius: 16px; padding: 24px; }
+    .sum-row-sm { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
+
     /* TX HISTORY REDESIGN */
     .tx-header { margin-bottom: 30px; }
     .tx-title { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
@@ -338,6 +355,58 @@
       </div>
     </div>
 
+    <!-- BUY BUNDLES SECTION -->
+    <div id="section-buy-bundles" style="display:none;">
+      <div class="dash-top">
+        <h1 style="font-size:1.35rem;font-weight:800;">Buy Data Bundles</h1>
+      </div>
+      <div class="buy-grid">
+        <div>
+          <div class="card mb-24">
+            <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:16px;">1. Select Network</h3>
+            <div class="network-selector">
+              <div class="net-card mtn active" onclick="selectNet(this)">
+                <span class="net-logo">🟡</span><div class="net-name">MTN</div>
+              </div>
+              <div class="net-card vodafone" onclick="selectNet(this)">
+                <span class="net-logo">🔴</span><div class="net-name">Vodafone</div>
+              </div>
+              <div class="net-card airteltigo" onclick="selectNet(this)">
+                <span class="net-logo">🔵</span><div class="net-name">AirtelTigo</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:16px;">2. Choose Bundle</h3>
+            <div class="bundle-grid">
+              <div class="b-card" onclick="selectBundle(this, '20GB', 60)">
+                <div class="size">20GB</div><div class="price">GHC 60.00</div>
+              </div>
+              <div class="b-card selected" onclick="selectBundle(this, '10GB', 35)">
+                <div class="size">10GB</div><div class="price">GHC 35.00</div>
+              </div>
+              <div class="b-card" onclick="selectBundle(this, '5GB', 20)">
+                <div class="size">5GB</div><div class="price">GHC 20.00</div>
+              </div>
+              <div class="b-card" onclick="selectBundle(this, '1GB', 5)">
+                <div class="size">1GB</div><div class="price">GHC 5.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="summary-card-small">
+          <h3 style="font-size:1rem;margin-bottom:16px;">Order Summary</h3>
+          <div class="sum-row-sm"><span>Network</span><span id="sumNetwork">MTN</span></div>
+          <div class="sum-row-sm"><span>Bundle</span><span id="sumBundle">10GB</span></div>
+          <div style="background:rgba(255,255,255,0.08); padding:12px; border-radius:8px; margin-top:16px; display:flex; justify-content:space-between; align-items:center;">
+            <span>Total</span><span style="font-size:1.2rem; font-weight:800;">GHC <span id="sumPrice">35.00</span></span>
+          </div>
+          <input type="tel" class="form-control" placeholder="Phone Number" style="margin-top:16px; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); color:white;">
+          <button class="btn btn-primary btn-full" style="margin-top:16px;">Pay Now</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ORDER HISTORY SECTION -->
     <div id="section-order-history" style="display:none;">
       <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Order History</h1></div>
@@ -391,6 +460,23 @@
       const link = document.getElementById('link-' + s);
       if (link) link.classList.toggle('active', s === id);
     });
+  }
+
+    });
+  }
+
+  /* BUY DATA LOGIC */
+  function selectNet(el) {
+    document.querySelectorAll('.net-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('sumNetwork').textContent = el.querySelector('.net-name').textContent;
+  }
+
+  function selectBundle(el, name, price) {
+    document.querySelectorAll('.b-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('sumBundle').textContent = name;
+    document.getElementById('sumPrice').textContent = price.toFixed(2);
   }
 
   const user = auth.getUser();
