@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartNet Data – Buy Data Instantly, Anytime</title>
+  <meta name="description" content="Buy mobile data bundles for MTN, Vodafone and AirtelTigo instantly at the best prices in Ghana.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #112145 60%, #0d2a5e 100%);
+      padding: 80px 5% 60px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(45,85,245,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #63b3ed; }
+    .hero p { color: rgba(255,255,255,0.7); font-size: 1.05rem; margin-bottom: 32px; max-width: 420px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* QUICK BUY CARD */
+    .quick-buy {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      color: var(--text);
+    }
+    .quick-buy h3 { font-size: 1rem; font-weight: 700; margin-bottom: 20px; }
+    .network-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .net-btn {
+      padding: 8px 18px;
+      border-radius: 99px;
+      border: 2px solid var(--gray-200);
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: var(--white);
+      transition: all 0.18s;
+    }
+    .net-btn.mtn.active, .net-btn.mtn:hover { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
+    .net-btn.vodafone.active, .net-btn.vodafone:hover { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
+    .net-btn.airteltigo.active, .net-btn.airteltigo:hover { border-color: var(--blue-light); background: #eff3ff; color: var(--blue); }
+    .quick-buy .form-group { margin-bottom: 14px; }
+    .price-hint { font-size: 0.8rem; color: var(--gray-400); margin-top: 4px; }
+
+    /* TRUSTED */
+    .trusted { text-align: center; margin-top: 16px; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+    .trusted-logos { display: flex; gap: 20px; justify-content: center; margin-top: 8px; }
+    .tlogo { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 14px; font-weight: 700; font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+
+    /* SECTION HEADER */
+    .section-head { margin-bottom: 32px; }
+    .section-head h2 { font-size: 1.7rem; font-weight: 800; margin-bottom: 6px; }
+    .section-head p { color: var(--gray-600); font-size: 0.95rem; }
+    .section-head a { font-size: 0.85rem; color: var(--blue-light); font-weight: 600; text-decoration: none; float: right; }
+
+    /* BUNDLE CARDS */
+    .bundle-hero {
+      background: linear-gradient(135deg, #1a3cce, #2d55f5);
+      color: white;
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bundle-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 140px; height: 140px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .bundle-hero .size { font-size: 2.2rem; font-weight: 800; }
+    .bundle-hero .name { font-size: 1rem; font-weight: 600; opacity: 0.85; }
+    .bundle-hero .price { margin-top: 16px; font-size: 1.4rem; font-weight: 700; }
+    .bundle-hero .old-price { text-decoration: line-through; opacity: 0.6; font-size: 0.9rem; }
+    .bundle-hero .discount { background: var(--green); color: white; border-radius: 99px; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; }
+
+    .bundle-card { border-radius: var(--radius); padding: 20px; border: 2px solid var(--gray-200); background: var(--white); transition: all 0.2s; }
+    .bundle-card:hover { border-color: var(--blue-light); box-shadow: var(--shadow); transform: translateY(-2px); }
+    .bundle-card .size { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+    .bundle-card .name { font-size: 0.85rem; color: var(--gray-600); }
+    .bundle-card .price { font-weight: 700; color: var(--blue-light); margin-top: 10px; font-size: 1rem; }
+    .add-btn { width: 28px; height: 28px; background: var(--blue-light); color: white; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .add-btn:hover { background: var(--blue); }
+
+    /* TESTIMONIALS */
+    .testimonials-bg { background: var(--white); }
+    .stars { color: #f59e0b; font-size: 1rem; margin-bottom: 8px; }
+    .testimonial-card { padding: 24px; border-radius: var(--radius); border: 1.5px solid var(--gray-200); }
+    .author { font-weight: 600; font-size: 0.9rem; margin-top: 12px; }
+    .author-sub { font-size: 0.8rem; color: var(--gray-400); }
+    .trust-banner { text-align: center; margin-top: 40px; color: var(--gray-600); font-size: 0.9rem; font-weight: 600; }
+    .trust-banner span { font-size: 1.6rem; font-weight: 800; color: var(--blue-light); display: block; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-icon">📶</span>
+    <span>SMARTNET DATA</span>
+  </a>
+  <ul>
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="buy-data.html">Buy Data</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="login.html" class="btn btn-outline">Login</a>
+    <a href="login.html#signup" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Buy Data <span>Instantly,</span> Anytime.</h1>
+      <p>Ghana's fastest data bundle platform. Affordable MTN, Vodafone & AirtelTigo bundles delivered in seconds.</p>
+      <div class="hero-actions">
+        <a href="buy-data.html" class="btn btn-primary btn-lg">Buy Data Now</a>
+        <a href="login.html#signup" class="btn btn-outline btn-lg">Get Started Free</a>
+      </div>
+      <div class="trusted" style="text-align:left; margin-top:32px;">
+        <div style="margin-bottom:8px;">Trusted by 30,000+ Users</div>
+        <div class="trusted-logos">
+          <div class="tlogo">MTN</div>
+          <div class="tlogo">Vodafone</div>
+          <div class="tlogo">AirtelTigo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK BUY WIDGET -->
+    <div class="quick-buy">
+      <h3>⚡ Quick Top-Up</h3>
+      <div class="network-row">
+        <button class="net-btn mtn active" onclick="selectNet(this,'mtn')">MTN</button>
+        <button class="net-btn vodafone" onclick="selectNet(this,'vodafone')">Vodafone</button>
+        <button class="net-btn airteltigo" onclick="selectNet(this,'airteltigo')">AirtelTigo</button>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" class="form-control" placeholder="0241234567">
+      </div>
+      <div class="form-group">
+        <label>Select Bundle</label>
+        <select class="form-control">
+          <option>1GB – GHC 5.00</option>
+          <option>5GB – GHC 20.00</option>
+          <option>10GB – GHC 35.00</option>
+          <option>20GB – GHC 60.00</option>
+          <option>50GB – GHC 120.00</option>
+        </select>
+      </div>
+      <a href="buy-data.html" class="btn btn-primary btn-full" style="margin-top:4px;">Buy Now</a>
+      <p class="price-hint" style="margin-top:10px;">🔒 Secure & instant delivery</p>
+    </div>
+  </div>
+</section>
+
+<!-- DISCOUNTED BUNDLES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head" style="display:flex; align-items:center; justify-content:space-between;">
+      <div>
+        <h2>Discounted Bundles</h2>
+        <p>Best value data deals available right now</p>
+      </div>
+      <a href="buy-data.html">See All →</a>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:20px; align-items:start;">
+      <!-- Featured -->
+      <div class="bundle-hero">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div>
+            <div class="size">100GB</div>
+            <div class="name">FESTIVE BOX</div>
+            <div style="font-size:0.8rem; opacity:0.7; margin-top:4px;">Valid for 30 days</div>
+          </div>
+          <span class="discount">60% OFF</span>
+        </div>
+        <div class="price">
+          GHC 250.00
+          <span class="old-price" style="margin-left:8px;">GHC 620</span>
+        </div>
+        <button class="btn btn-green" style="margin-top:16px; padding:10px 24px;">Buy Now</button>
+      </div>
+
+      <!-- Work Bundle -->
+      <div class="bundle-card">
+        <div class="size" style="color:var(--blue-light);">30GB</div>
+        <div class="name">Work From Home</div>
+        <div class="price">GHC 85.00</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+          <span class="badge badge-blue">MTN</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+
+      <!-- Night Bundle -->
+      <div class="bundle-card">
+        <div class="size" style="color:#a855f7;">20GB</div>
+        <div class="name">Nite &amp; Date</div>
+        <div class="price">GHC 45.00</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
+          <span class="badge badge-red">Vodafone</span>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-bg">
+  <div class="container">
+    <div class="section-head text-center" style="float:none;">
+      <h2>Trusted by 30,000+ Users</h2>
+      <p>Real reviews from real customers</p>
+    </div>
+    <div class="grid-3">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p style="font-size:0.9rem; color:var(--gray-600);">"Fastest data delivery I've ever experienced. My bundle arrived in under 2 seconds!"</p>
+        <div class="author">Kwame Mensah</div>
+        <div class="author-sub">MTN subscriber · Accra</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p style="font-size:0.9rem; color:var(--gray-600);">"The prices here beat everywhere else. I save 20% every month using SmartNet Data."</p>
+        <div class="author">Akua Boateng</div>
+        <div class="author-sub">Vodafone subscriber · Kumasi</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★☆</div>
+        <p style="font-size:0.9rem; color:var(--gray-600);">"Very intuitive. I can top up my family members' numbers in one place. Highly recommend."</p>
+        <div class="author">Nana Asante</div>
+        <div class="author-sub">AirtelTigo · Takoradi</div>
+      </div>
+    </div>
+    <div class="trust-banner">
+      <span>30,000+</span>
+      Happy customers & counting
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#">Home</a>
+    <a href="buy-data.html">Buy Data</a>
+    <a href="#">Support</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p>© 2025 SmartNet Data. All rights reserved.</p>
+</footer>
+
+<script>
+  function selectNet(el, net) {
+    document.querySelectorAll('.net-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>

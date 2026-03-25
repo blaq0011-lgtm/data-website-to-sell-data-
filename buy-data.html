@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Data Bundle – SmartNet Data</title>
+  <meta name="description" content="Choose a network and data bundle to buy instantly.">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-wrap { max-width: 960px; margin: 40px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: start; }
+
+    /* Network selector */
+    .network-selector { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .net-card {
+      flex: 1;
+      min-width: 100px;
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--white);
+    }
+    .net-card:hover { border-color: var(--blue-light); }
+    .net-card.active { border-color: var(--blue-light); background: #eff3ff; }
+    .net-card .net-logo { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+    .net-card .net-name { font-size: 0.8rem; font-weight: 700; }
+    .net-card.mtn.active .net-name { color: #92400e; }
+    .net-card.vodafone.active .net-name { color: #991b1b; }
+    .net-card.airteltigo.active .net-name { color: var(--blue); }
+
+    /* Bundle grid */
+    .bundle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .b-card {
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--white);
+      position: relative;
+    }
+    .b-card:hover, .b-card.selected { border-color: var(--blue-light); background: #eff3ff; }
+    .b-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 22px; height: 22px;
+      background: var(--blue-light);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .b-card .size { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+    .b-card .validity { font-size: 0.76rem; color: var(--gray-400); }
+    .b-card .price { font-size: 1rem; font-weight: 700; color: var(--blue-light); margin-top: 8px; }
+    .b-card .orig { text-decoration: line-through; color: var(--gray-400); font-size: 0.8rem; margin-left: 6px; }
+
+    /* Summary Card */
+    .summary-card { background: var(--navy); color: var(--white); border-radius: 16px; padding: 28px; position: sticky; top: 84px; }
+    .summary-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 20px; opacity: 0.9; }
+    .sum-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; }
+    .sum-row:last-of-type { border-bottom: none; }
+    .sum-label { opacity: 0.65; }
+    .sum-val { font-weight: 600; }
+    .total-row { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+    .total-row .label { opacity: 0.8; font-size: 0.9rem; }
+    .total-row .amount { font-size: 1.4rem; font-weight: 800; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <span class="logo-icon">📶</span>
+    <span>SMARTNET DATA</span>
+  </a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="buy-data.html" class="active">Buy Data</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="login.html" class="btn btn-outline">Login</a>
+    <a href="login.html#signup" class="btn btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <!-- LEFT: SELECTION -->
+  <div>
+    <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:8px;">Choose Bundle</h2>
+    <p class="color-muted fs-sm mb-24">Select your network and preferred data bundle</p>
+
+    <!-- Step 1: Network -->
+    <div class="card mb-24">
+      <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:16px;">1. Select Network</h3>
+      <div class="network-selector">
+        <div class="net-card mtn active" onclick="selectNet(this)">
+          <span class="net-logo">🟡</span>
+          <div class="net-name">MTN</div>
+        </div>
+        <div class="net-card vodafone" onclick="selectNet(this)">
+          <span class="net-logo">🔴</span>
+          <div class="net-name">Vodafone</div>
+        </div>
+        <div class="net-card airteltigo" onclick="selectNet(this)">
+          <span class="net-logo">🔵</span>
+          <div class="net-name">AirtelTigo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Bundle -->
+    <div class="card mb-24">
+      <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:16px;">2. Choose Bundle</h3>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this)">Data</button>
+        <button class="tab-btn" onclick="switchTab(this)">SMSBundle</button>
+        <button class="tab-btn" onclick="switchTab(this)">Voice</button>
+      </div>
+      <div class="bundle-grid">
+        <div class="b-card" onclick="selectBundle(this, '20GB', 60)">
+          <div class="size">20GB</div>
+          <div class="validity">Valid 30 days</div>
+          <div class="price">GHC 60.00 <span class="orig">GHC 80</span></div>
+        </div>
+        <div class="b-card selected" onclick="selectBundle(this, '10GB', 35)">
+          <div class="size">10GB</div>
+          <div class="validity">Valid 30 days</div>
+          <div class="price">GHC 35.00 <span class="orig">GHC 50</span></div>
+        </div>
+        <div class="b-card" onclick="selectBundle(this, '5GB', 20)">
+          <div class="size">5GB</div>
+          <div class="validity">Valid 14 days</div>
+          <div class="price">GHC 20.00</div>
+        </div>
+        <div class="b-card" onclick="selectBundle(this, '1GB', 5)">
+          <div class="size">1GB</div>
+          <div class="validity">Valid 7 days</div>
+          <div class="price">GHC 5.00</div>
+        </div>
+        <div class="b-card" onclick="selectBundle(this, '50GB', 120)">
+          <div class="size">50GB</div>
+          <div class="validity">Valid 30 days</div>
+          <div class="price">GHC 120.00</div>
+        </div>
+        <div class="b-card" onclick="selectBundle(this, '100GB', 220)">
+          <div class="size">100GB</div>
+          <div class="validity">Valid 30 days</div>
+          <div class="price">GHC 220.00 <span class="orig">GHC 550</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Phone -->
+    <div class="card">
+      <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:16px;">3. Enter Phone Number</h3>
+      <div class="form-group" style="margin-bottom:0;">
+        <label>Recipient Number</label>
+        <input type="tel" class="form-control" placeholder="e.g. 0241234567" id="phoneInput">
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: SUMMARY -->
+  <div class="summary-card">
+    <h3>📦 SMARTNET Data</h3>
+    <div class="sum-row">
+      <span class="sum-label">Network</span>
+      <span class="sum-val" id="sumNetwork">MTN</span>
+    </div>
+    <div class="sum-row">
+      <span class="sum-label">Bundle</span>
+      <span class="sum-val" id="sumBundle">10GB</span>
+    </div>
+    <div class="sum-row">
+      <span class="sum-label">Validity</span>
+      <span class="sum-val">30 days</span>
+    </div>
+    <div class="sum-row">
+      <span class="sum-label">Phone</span>
+      <span class="sum-val" id="sumPhone">–</span>
+    </div>
+    <div class="total-row">
+      <span class="label">Total</span>
+      <span class="amount">GHC <span id="sumPrice">35.00</span></span>
+    </div>
+    <button class="btn btn-green btn-full" style="margin-top:20px; padding:14px;" onclick="buyNow()">
+      ✅ Confirm &amp; Pay
+    </button>
+    <p style="text-align:center; font-size:0.78rem; opacity:0.55; margin-top:12px;">🔒 Secured by SmartNet · Instant Delivery</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="buy-data.html">Buy Data</a>
+    <a href="#">Support</a>
+  </div>
+  <p>© 2025 SmartNet Data. All rights reserved.</p>
+</footer>
+
+<script>
+  let selectedPrice = 35;
+
+  function selectNet(el) {
+    document.querySelectorAll('.net-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('sumNetwork').textContent = el.querySelector('.net-name').textContent;
+  }
+
+  function selectBundle(el, name, price) {
+    document.querySelectorAll('.b-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPrice = price;
+    document.getElementById('sumBundle').textContent = name;
+    document.getElementById('sumPrice').textContent = price.toFixed(2);
+  }
+
+  function switchTab(el) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  document.getElementById('phoneInput').addEventListener('input', function() {
+    document.getElementById('sumPhone').textContent = this.value || '–';
+  });
+
+  function buyNow() {
+    window.location.href = 'dashboard.html';
+  }
+</script>
+</body>
+</html>
