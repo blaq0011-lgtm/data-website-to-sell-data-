@@ -95,11 +95,11 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
-    <a href="buy-data.html" class="side-link">
+    <a href="buy-data.html" onclick="showSection('buy-bundles')" id="link-buy-bundles" class="side-link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       Buy Bundles
     </a>
-    <a href="#" class="side-link">
+    <a href="#" onclick="showSection('order-history')" id="link-order-history" class="side-link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>
       Order History
     </a>
@@ -107,11 +107,11 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       Transactions
     </a>
-    <a href="#" class="side-link">
+    <a href="#" onclick="showSection('wallet-topup')" id="link-wallet-topup" class="side-link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M22 10h-2c-1.1 0-2 .9-2 2s.9 2 2 2h2"/><path d="M7 12h.01"/></svg>
       Wallet Top-up
     </a>
-    <a href="#" class="side-link">
+    <a href="#" onclick="showSection('rewards')" id="link-rewards" class="side-link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
       Rewards
       <span class="badge-new">NEW</span>
@@ -338,6 +338,24 @@
       </div>
     </div>
 
+    <!-- ORDER HISTORY SECTION -->
+    <div id="section-order-history" style="display:none;">
+      <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Order History</h1></div>
+      <div class="card"><p style="color:var(--gray-400);">No orders found.</p></div>
+    </div>
+
+    <!-- WALLET TOPUP SECTION -->
+    <div id="section-wallet-topup" style="display:none;">
+      <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Wallet Top-up</h1></div>
+      <div class="card"><button class="btn btn-primary">Fund Wallet Now</button></div>
+    </div>
+
+    <!-- REWARDS SECTION -->
+    <div id="section-rewards" style="display:none;">
+      <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Rewards</h1></div>
+      <div class="card"><p style="color:var(--gray-400);">You have no rewards yet. Keep using the app to earn!</p></div>
+    </div>
+
     <!-- SETTINGS SECTION -->
     <div id="section-settings" style="display:none;">
       <div class="dash-top">
@@ -366,9 +384,10 @@
 </div>
 <script>
   function showSection(id) {
-    const sections = ['overview', 'transactions', 'profile', 'notifications', 'settings'];
+    const sections = ['overview', 'transactions', 'profile', 'notifications', 'settings', 'order-history', 'wallet-topup', 'rewards'];
     sections.forEach(s => {
-      document.getElementById('section-' + s).style.display = (s === id ? 'block' : 'none');
+      const sectionEl = document.getElementById('section-' + s);
+      if (sectionEl) sectionEl.style.display = (s === id ? 'block' : 'none');
       const link = document.getElementById('link-' + s);
       if (link) link.classList.toggle('active', s === id);
     });
