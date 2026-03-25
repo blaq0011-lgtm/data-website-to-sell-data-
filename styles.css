@@ -3,9 +3,9 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy: #0b1a33;
-  --blue: #1a3cce;
-  --blue-light: #2d55f5;
+  --navy: #0f172a;
+  --blue: #2563eb;
+  --blue-light: #fbbf24;
   --green: #22c55e;
   --green-dark: #16a34a;
   --white: #fef7ef;
@@ -87,8 +87,8 @@ nav ul a:hover, nav ul a.active { color: var(--white); }
   text-decoration: none;
   transition: all 0.2s;
 }
-.btn-primary { background: var(--blue-light); color: var(--white); }
-.btn-primary:hover { background: var(--blue); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(45,85,245,0.4); }
+.btn-primary { background: var(--blue-light); color: var(--navy); }
+.btn-primary:hover { background: var(--blue); color: var(--white); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(45,85,245,0.4); }
 .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.3); }
 .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
 .btn-green { background: var(--green); color: var(--white); }
