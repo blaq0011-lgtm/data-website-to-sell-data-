@@ -128,7 +128,14 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M22 10h-2c-1.1 0-2 .9-2 2s.9 2 2 2h2"/><path d="M7 12h.01"/></svg>
       Wallet Top-up
     </a>
-    
+    <a href="#" onclick="showSection('profile')" id="link-profile" class="side-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+    <a href="#" onclick="showSection('notifications')" id="link-notifications" class="side-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      Notifications
+    </a>
     
     <div class="sidebar-divider"></div>
     
@@ -142,7 +149,8 @@
     </a>
   </aside>
 
-  <main class="dash-    <div id="section-overview" style="background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+  <main class="dash-main">
+    <div id="section-overview" style="background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
       <div class="tx-header">
         <h1 class="tx-title">Good morning, <span id="userNameHello">User</span> 👋</h1>
         <p class="tx-sub">Here's your account overview for today.</p>
@@ -180,39 +188,9 @@
         </div>
       </div>
 
-      <!-- RECENT ACTIVITY -->
-      <div class="tx-table-container">
-        <div style="padding: 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222;">
-          <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700;">Recent Activity</h3>
-          <button onclick="showSection('transactions')" style="background: none; border: none; color: #2563eb; font-weight: 700; font-size: 0.85rem; cursor: pointer;">View All Activity →</button>
-        </div>
-        <table class="dark-table">
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Amount</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>10GB Bundle (0241234567)</td>
-              <td>Bundle</td>
-              <td style="color: #fff; font-weight: 700;">-GH₵ 35.00</td>
-              <td><span style="color: #4ade80; background: rgba(74,222,128,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">Success</span></td>
-            </tr>
-            <tr>
-              <td>Wallet Top-up (MoMo)</td>
-              <td>Deposit</td>
-              <td style="color: #fbbf24; font-weight: 700;">+GH₵ 200.00</td>
-              <td><span style="color: #4ade80; background: rgba(74,222,128,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem;">Success</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- RE        </table>
       </div>
-    </div>  </table>
-      </div>
+    </div>
     </div>
 
     </div>
