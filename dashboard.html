@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard – SmartNet Data</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="auth.js"></script>
   <style>
     body { background: var(--gray-100); }
     .dash-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 64px); }
@@ -46,8 +47,8 @@
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-right">
-    <span style="color:var(--gray-400);font-size:0.88rem;">👤 John Mensah</span>
-    <a href="login.html" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">Logout</a>
+    <span style="color:var(--gray-400);font-size:0.88rem;" id="userNameTop">👤 User</span>
+    <a href="#" onclick="auth.logout()" class="btn btn-outline" style="font-size:0.8rem;padding:8px 16px;">Logout</a>
   </div>
 </nav>
 
@@ -61,13 +62,13 @@
     <a href="#" class="side-link"><span>👤</span> Profile</a>
     <a href="#" class="side-link"><span>🔔</span> Notifications</a>
     <a href="#" class="side-link"><span>⚙️</span> Settings</a>
-    <a href="login.html" class="side-link" style="margin-top:auto;"><span>🚪</span> Logout</a>
+    <a href="#" onclick="auth.logout()" class="side-link" style="margin-top:auto;"><span>🚪</span> Logout</a>
   </aside>
 
   <main class="dash-main">
     <div class="dash-top">
       <div>
-        <h1 style="font-size:1.35rem;font-weight:800;">Good morning, John 👋</h1>
+        <h1 style="font-size:1.35rem;font-weight:800;">Good morning, <span id="userNameHello">User</span> 👋</h1>
         <p style="color:var(--gray-600);font-size:0.88rem;">Here's your account overview.</p>
       </div>
       <a href="buy-data.html" class="btn btn-primary">+ Buy Data Bundle</a>
