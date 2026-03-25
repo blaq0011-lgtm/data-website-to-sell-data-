@@ -419,11 +419,8 @@
       <div class="card"><button class="btn btn-primary">Fund Wallet Now</button></div>
     </div>
 
-    <!-- REWARDS SECTION -->
-    <div id="section-rewards" style="display:none;">
-      <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Rewards</h1></div>
-      <div class="card"><p style="color:var(--gray-400);">You have no rewards yet. Keep using the app to earn!</p></div>
     </div>
+
 
     <!-- SETTINGS SECTION -->
     <div id="section-settings" style="display:none;">
@@ -453,7 +450,7 @@
 </div>
 <script>
   function showSection(id) {
-    const sections = ['overview', 'transactions', 'profile', 'notifications', 'settings', 'order-history', 'wallet-topup', 'rewards'];
+    const sections = ['overview', 'transactions', 'profile', 'notifications', 'settings', 'order-history', 'wallet-topup'];
     sections.forEach(s => {
       const sectionEl = document.getElementById('section-' + s);
       if (sectionEl) sectionEl.style.display = (s === id ? 'block' : 'none');
