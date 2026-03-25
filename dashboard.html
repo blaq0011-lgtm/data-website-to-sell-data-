@@ -279,26 +279,48 @@
       </div>
     </div>
 
-    <!-- NOTIFICATIONS SECTION -->
-    <div id="section-notifications" style="display:none;">
-      <div class="dash-top">
-        <h1 style="font-size:1.35rem;font-weight:800;">Notifications</h1>
+    <!-- TRANSACTIONS SECTION handled earlier -->
+
+    <!-- PROFILE SECTION -->
+    <div id="section-profile" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+      <div class="tx-header">
+        <h1 class="tx-title">Your Profile</h1>
+        <p class="tx-sub">Manage your personal information and account security.</p>
       </div>
-      <div class="card" style="padding:0;">
-        <div style="padding:16px 22px;border-bottom:1px solid var(--gray-100);display:flex;gap:14px;align-items:start;">
-          <div style="background:var(--blue-light);width:10px;height:10px;border-radius:50%;margin-top:6px;"></div>
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); max-width: 600px;">
+        <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 32px;">
+          <div style="width: 80px; height: 80px; background: #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 2rem; font-weight: 800;">U</div>
           <div>
-            <div style="font-weight:600;font-size:0.9rem;">Successful Top-up</div>
-            <div style="font-size:0.82rem;color:var(--gray-600);">Your wallet has been credited with GHC 200.00</div>
-            <div style="font-size:0.75rem;color:var(--gray-400);margin-top:4px;">1 hour ago</div>
+            <h3 style="color: #fff; font-size: 1.4rem; font-weight: 800;" id="profileName">User</h3>
+            <p style="color: rgba(255,255,255,0.4);" id="profileEmail">user@example.com</p>
           </div>
         </div>
-        <div style="padding:16px 22px;border-bottom:1px solid var(--gray-100);display:flex;gap:14px;align-items:start;opacity:0.7;">
-          <div style="background:var(--gray-200);width:10px;height:10px;border-radius:50%;margin-top:6px;"></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="filter-group"><span class="filter-label">Phone Number</span><input type="text" class="filter-input" value="024 123 4567" disabled></div>
+          <div class="filter-group"><span class="filter-label">User ID</span><input type="text" class="filter-input" value="SND-00412" disabled></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS SECTION -->
+    <div id="section-notifications" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+      <div class="tx-header">
+        <h1 class="tx-title">Notifications</h1>
+        <p class="tx-sub">Stay updated with your latest account activity.</p>
+      </div>
+      <div class="tx-table-container">
+        <div style="padding: 24px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 16px;">
+          <div style="width: 10px; height: 10px; background: #fbbf24; border-radius: 50%;"></div>
           <div>
-            <div style="font-weight:600;font-size:0.9rem;">Welcome to SmartNet</div>
-            <div style="font-size:0.82rem;color:var(--gray-600);">Thanks for choosing us for your data needs!</div>
-            <div style="font-size:0.75rem;color:var(--gray-400);margin-top:4px;">Yesterday</div>
+            <div style="color: #fff; font-weight: 700;">Successful Top-up</div>
+            <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Your wallet has been credited with GHC 200.00</div>
+          </div>
+        </div>
+        <div style="padding: 24px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 16px; opacity: 0.6;">
+          <div style="width: 10px; height: 10px; background: rgba(255,255,255,0.2); border-radius: 50%;"></div>
+          <div>
+            <div style="color: #fff; font-weight: 700;">Welcome to SmartNet</div>
+            <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Thanks for choosing us for your data needs!</div>
           </div>
         </div>
       </div>
@@ -357,42 +379,48 @@
     </div>
 
     <!-- ORDER HISTORY SECTION -->
-    <div id="section-order-history" style="display:none;">
-      <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Order History</h1></div>
-      <div class="card"><p style="color:var(--gray-400);">No orders found.</p></div>
+    <div id="section-order-history" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+      <div class="tx-header">
+        <h1 class="tx-title">Order History</h1>
+        <p class="tx-sub">A list of all your data and bundle purchases.</p>
+      </div>
+      <div class="tx-table-container">
+        <table class="dark-table">
+          <thead><tr><th>Item</th><th>Quantity</th><th>Price</th><th>Date</th></tr></thead>
+          <tbody><tr><td colspan="4" class="tx-empty">No orders found.</td></tr></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- WALLET TOPUP SECTION -->
-    <div id="section-wallet-topup" style="display:none;">
-      <div class="dash-top"><h1 style="font-size:1.35rem;font-weight:800;">Wallet Top-up</h1></div>
-      <div class="card"><button class="btn btn-primary">Fund Wallet Now</button></div>
-    </div>
-
+    <div id="section-wallet-topup" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+      <div class="tx-header">
+        <h1 class="tx-title">Wallet Top-up</h1>
+        <p class="tx-sub">Add funds to your wallet instantly.</p>
+      </div>
+      <div style="background: #1a1a1a; padding: 40px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+        <div class="tx-wallet-value" style="margin-bottom: 24px;">₵1,240.50</div>
+        <button class="btn-refresh" style="width: 240px; margin: 0 auto; height: 50px; font-size: 1rem;">+ Fund Wallet Now</button>
+      </div>
     </div>
 
 
     <!-- SETTINGS SECTION -->
-    <div id="section-settings" style="display:none;">
-      <div class="dash-top">
-        <h1 style="font-size:1.35rem;font-weight:800;">Settings</h1>
+    <div id="section-settings" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+      <div class="tx-header">
+        <h1 class="tx-title">Settings</h1>
+        <p class="tx-sub">Configure your account preferences and security.</p>
       </div>
-      <div class="card">
-        <h4 style="margin-bottom:16px;">General</h4>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray-100);">
-          <div>
-            <div style="font-weight:600;">Email Alerts</div>
-            <div style="font-size:0.8rem;color:var(--gray-400);">Receive email receipts for every purchase</div>
-          </div>
-          <input type="checkbox" checked>
+      <div style="background: #1a1a1a; padding: 32px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); max-width: 600px;">
+        <div style="border-bottom: 1px solid #222; padding-bottom: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+          <div><div style="color: #fff; font-weight: 700;">Email Alerts</div><div style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">Receive receipts for every purchase</div></div>
+          <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #fbbf24;">
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
-          <div>
-            <div style="font-weight:600;">2FA Security</div>
-            <div style="font-size:0.8rem;color:var(--gray-400);">Extra layer of security for logins</div>
-          </div>
-          <input type="checkbox">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div><div style="color: #fff; font-weight: 700;">2FA Security</div><div style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">Enabled biometric authentication</div></div>
+          <input type="checkbox" style="width: 20px; height: 20px; accent-color: #fbbf24;">
         </div>
-        <button class="btn btn-primary" style="margin-top:20px;">Save Changes</button>
+        <button class="btn-refresh" style="margin-top: 32px; width: 100%;">Save Preferences</button>
       </div>
     </div>
   </main>
