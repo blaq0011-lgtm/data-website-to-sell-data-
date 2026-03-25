@@ -6,6 +6,7 @@
   <title>Dashboard – SmartNet Data</title>
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js"></script>
+  <script src="data.js"></script>
   <style>
     body { background: var(--gray-100); }
     .dash-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 64px); }
@@ -239,18 +240,12 @@
               <th>Date</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td colspan="4" class="tx-empty">No transactions found.</td>
-            </tr>
+          <tbody id="tx-table-body">
+            <!-- Dynamic transactions -->
           </tbody>
         </table>
-        <div class="tx-footer">
-          <div>Showing <b>0</b> to <b>0</b> of <b>0</b> transactions</div>
-          <div class="pagination">
-            <button class="page-btn" disabled>&lt;</button>
-            <button class="page-btn" disabled>&gt;</button>
-          </div>
+        <div class="tx-footer" id="tx-pagination">
+          <!-- Dynamic pagination -->
         </div>
       </div>
     </div>
@@ -304,21 +299,8 @@
         <h1 class="tx-title">Notifications</h1>
         <p class="tx-sub">Stay updated with your latest account activity.</p>
       </div>
-      <div class="tx-table-container">
-        <div style="padding: 24px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 16px;">
-          <div style="width: 10px; height: 10px; background: #fbbf24; border-radius: 50%;"></div>
-          <div>
-            <div style="color: #fff; font-weight: 700;">Successful Top-up</div>
-            <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Your wallet has been credited with GHC 200.00</div>
-          </div>
-        </div>
-        <div style="padding: 24px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 16px; opacity: 0.6;">
-          <div style="width: 10px; height: 10px; background: rgba(255,255,255,0.2); border-radius: 50%;"></div>
-          <div>
-            <div style="color: #fff; font-weight: 700;">Welcome to SmartNet</div>
-            <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Thanks for choosing us for your data needs!</div>
-          </div>
-        </div>
+      <div class="tx-table-container" id="notif-list">
+        <!-- Dynamic notifications -->
       </div>
     </div>
 
@@ -368,8 +350,8 @@
           <div style="background:rgba(255,255,255,0.08); padding:12px; border-radius:8px; margin-top:16px; display:flex; justify-content:space-between; align-items:center;">
             <span>Total</span><span style="font-size:1.2rem; font-weight:800;">GHC <span id="sumPrice">35.00</span></span>
           </div>
-          <input type="tel" class="form-control" placeholder="Phone Number" style="margin-top:16px; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); color:white;">
-          <button class="btn btn-primary btn-full" style="margin-top:16px;">Pay Now</button>
+          <input type="tel" id="purchasePhone" class="form-control" placeholder="Phone Number" style="margin-top:16px; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); color:white;">
+          <button class="btn btn-primary btn-full" style="margin-top:16px;" onclick="processPurchase()">Pay Now</button>
         </div>
       </div>
     </div>
@@ -395,8 +377,10 @@
         <p class="tx-sub">Add funds to your wallet instantly.</p>
       </div>
       <div style="background: #1a1a1a; padding: 40px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-        <div class="tx-wallet-value" style="margin-bottom: 24px;">₵1,240.50</div>
-        <button class="btn-refresh" style="width: 240px; margin: 0 auto; height: 50px; font-size: 1rem;">+ Fund Wallet Now</button>
+        <div style="color:rgba(255,255,255,0.4); margin-bottom:10px;">Current Balance</div>
+        <div class="tx-wallet-value" style="margin-bottom: 24px;" id="topupBalanceDisplay">₵0.00</div>
+        <input type="number" id="topupAmount" class="form-control" placeholder="Amount (GHC)" style="max-width:300px; margin:0 auto 16px; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); color:white; text-align:center;">
+        <button class="btn-refresh" style="width: 240px; margin: 0 auto; height: 50px; font-size: 1rem;" onclick="processTopup()">Fund Wallet Now</button>
       </div>
     </div>
 
@@ -423,13 +407,93 @@
 </div>
 <script>
   function showSection(id) {
-    const sections = ['overview', 'transactions', 'profile', 'notifications', 'settings', 'order-history', 'wallet-topup'];
+    const sections = ['overview', 'transactions', 'profile', 'notifications', 'settings', 'order-history', 'wallet-topup', 'buy-bundles'];
     sections.forEach(s => {
       const sectionEl = document.getElementById('section-' + s);
       if (sectionEl) sectionEl.style.display = (s === id ? 'block' : 'none');
       const link = document.getElementById('link-' + s);
       if (link) link.classList.toggle('active', s === id);
     });
+    renderAll();
+  }
+
+  function renderAll() {
+    const balance = smartData.getBalance();
+    document.querySelectorAll('.tx-wallet-value, .wallet-balance').forEach(el => el.textContent = '₵' + balance.toFixed(2));
+    if (document.getElementById('topupBalanceDisplay')) document.getElementById('topupBalanceDisplay').textContent = '₵' + balance.toFixed(2);
+    
+    // Transactions
+    const txs = smartData.getTransactions();
+    const txBody = document.getElementById('tx-table-body');
+    if (txBody) {
+        txBody.innerHTML = txs.length ? txs.map(t => `
+            <tr>
+                <td>${t.description}</td>
+                <td><span style="background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:4px; font-size:0.75rem;">${t.type}</span></td>
+                <td style="color:${t.amount < 0 ? '#ff4d4d' : '#4ade80'}; font-weight:700;">${t.amount < 0 ? '' : '+'}${t.amount}</td>
+                <td>${t.date}</td>
+            </tr>
+        `).join('') : '<tr><td colspan="4" class="tx-empty">No transactions found.</td></tr>';
+    }
+
+    // Orders
+    const orders = smartData.getOrders();
+    const orderBody = document.querySelector('#section-order-history .dark-table tbody');
+    if (orderBody) {
+        orderBody.innerHTML = orders.length ? orders.map(o => `
+            <tr>
+                <td>${o.bundle} (${o.network})</td>
+                <td>${o.phone}</td>
+                <td style="color:#fff; font-weight:700;">₵${o.price}</td>
+                <td>${o.date}</td>
+            </tr>
+        `).join('') : '<tr><td colspan="4" class="tx-empty">No orders found.</td></tr>';
+    }
+
+    // Notifications
+    const notes = smartData.getNotifications();
+    const noteList = document.getElementById('notif-list');
+    if (noteList) {
+        noteList.innerHTML = notes.map(n => `
+            <div style="padding: 24px; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 16px; ${n.isNew ? '' : 'opacity: 0.6;'}">
+              <div style="width: 10px; height: 10px; background: ${n.isNew ? '#fbbf24' : 'rgba(255,255,255,0.2)'}; border-radius: 50%;"></div>
+              <div>
+                <div style="color: #fff; font-weight: 700;">${n.title}</div>
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">${n.content}</div>
+                <div style="color: rgba(255,255,255,0.3); font-size: 0.7rem; margin-top:4px;">${n.time}</div>
+              </div>
+            </div>
+        `).join('');
+    }
+  }
+
+  function processPurchase() {
+    const net = document.getElementById('sumNetwork').textContent;
+    const bundle = document.getElementById('sumBundle').textContent;
+    const price = parseFloat(document.getElementById('sumPrice').textContent);
+    const phone = document.getElementById('purchasePhone').value;
+
+    if (!phone) return alert('Please enter recipient phone number.');
+    if (smartData.getBalance() < price) return alert('Insufficient wallet balance. Please top up.');
+
+    smartData.updateBalance(-price);
+    smartData.addTransaction(`Purchase ${bundle} (${net}) for ${phone}`, 'Bundle', -price, 'Success');
+    smartData.addOrder(bundle, net, price, phone);
+    
+    alert('Purchase successful!');
+    showSection('transactions');
+  }
+
+  function processTopup() {
+    const amount = parseFloat(document.getElementById('topupAmount').value);
+    if (!amount || amount <= 0) return alert('Please enter a valid amount.');
+
+    smartData.updateBalance(amount);
+    smartData.addTransaction('Wallet Top-up via Mobile Money', 'Deposit', amount, 'Success');
+    
+    alert('Wallet funded successfully!');
+    document.getElementById('topupAmount').value = '';
+    showSection('overview');
   }
 
   /* BUY DATA LOGIC */
@@ -456,6 +520,8 @@
     const profEmail = document.getElementById('profileEmail');
     if (profEmail) profEmail.textContent = user.email;
   }
+  
+  renderAll();
 </script>
 </body>
 </html>
