@@ -172,17 +172,17 @@
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
         <div style="background: #1a1a1a; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
           <div style="color: rgba(255,255,255,0.4); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Total Spent</div>
-          <div style="font-size: 1.5rem; font-weight: 800; color: #fff;">GH₵ 820.00</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #fff;">GH₵ <span id="stat-total-spent">0.00</span></div>
           <div style="color: #4ade80; font-size: 0.75rem; margin-top: 6px;">↑ 12.5% this month</div>
         </div>
         <div style="background: #1a1a1a; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
           <div style="color: rgba(255,255,255,0.4); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Bundles Bought</div>
-          <div style="font-size: 1.5rem; font-weight: 800; color: #fff;">34</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #fff;"><span id="stat-bundles-count">0</span></div>
           <div style="color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-top: 6px;">All-time usage</div>
         </div>
         <div style="background: #1a1a1a; padding: 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
           <div style="color: rgba(255,255,255,0.4); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Referral Bonus</div>
-          <div style="font-size: 1.5rem; font-weight: 800; color: #fbbf24;">GH₵ 45.00</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #fbbf24;">GH₵ <span id="stat-referral-bonus">0.00</span></div>
           <div style="color: #2563eb; font-size: 0.75rem; margin-top: 6px;">3 successful invites</div>
         </div>
       </div>
@@ -418,6 +418,12 @@
     document.querySelectorAll('.tx-wallet-value, .wallet-balance').forEach(el => el.textContent = '₵' + balance.toFixed(2));
     if (document.getElementById('topupBalanceDisplay')) document.getElementById('topupBalanceDisplay').textContent = '₵' + balance.toFixed(2);
     
+    // Stats
+    const stats = smartData.getStats();
+    if (document.getElementById('stat-total-spent')) document.getElementById('stat-total-spent').textContent = stats.totalSpent;
+    if (document.getElementById('stat-bundles-count')) document.getElementById('stat-bundles-count').textContent = stats.bundlesBought;
+    if (document.getElementById('stat-referral-bonus')) document.getElementById('stat-referral-bonus').textContent = stats.referralBonus;
+    
     // Transactions
     const txs = smartData.getTransactions();
     const txBody = document.getElementById('tx-table-body'); // Main transactions table
@@ -485,14 +491,15 @@
     const phone = document.getElementById('purchasePhone').value;
 
     if (!phone) return alert('Please enter recipient phone number.');
-    if (smartData.getBalance() < price) return alert('Insufficient wallet balance. Please top up.');
-
-    smartData.updateBalance(-price);
-    smartData.addTransaction(`Purchase ${bundle} (${net}) for ${phone}`, 'Bundle', -price, 'Success');
-    smartData.addOrder(bundle, net, price, phone);
     
-    alert('Purchase successful!');
-    showSection('transactions');
+    // Redirect to checkout with order details in URL
+    const params = new URLSearchParams({
+      network: net,
+      bundle: bundle,
+      price: price.toFixed(2),
+      phone: phone
+    });
+    window.location.href = 'payment-checkout.html?' + params.toString();
   }
 
   function processTopup() {
@@ -533,6 +540,14 @@
   }
   
   renderAll();
+
+  // Check for successful purchase redirect
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('purchase') === 'success') {
+    alert('🎉 Purchase successful! Your data has been credited.');
+    // Clean up URL without refreshing
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
 </script>
 </body>
 </html>

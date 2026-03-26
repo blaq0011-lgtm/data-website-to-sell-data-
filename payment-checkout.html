@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment Checkout – SmartNet Data</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="data.js"></script>
   <style>
     body { background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .checkout-wrap { width: 100%; max-width: 480px; padding: 24px; }
@@ -162,6 +163,11 @@
       document.getElementById('ussdModal').style.display = 'none';
       document.getElementById('formCard').style.display = 'none';
       document.getElementById('processingCard').style.display = 'block';
+
+      // Record the success in our local data system
+      const numericPrice = parseFloat(price);
+      smartData.addTransaction(`Purchase ${bundle} (${network}) for ${recepient}`, 'Bundle', -numericPrice, 'Success');
+      smartData.addOrder(bundle, network, numericPrice, recepient);
 
       // Simulate API call delay then redirect to dashboard showing success
       setTimeout(() => {

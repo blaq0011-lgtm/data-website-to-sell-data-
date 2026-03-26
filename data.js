@@ -69,5 +69,21 @@ const smartData = {
         };
         notifications.unshift(newNote);
         localStorage.setItem('notifications', JSON.stringify(notifications.slice(0, 20)));
+    },
+
+    // STATISTICS
+    getStats() {
+        const txs = this.getTransactions();
+        const orders = this.getOrders();
+        
+        const totalSpent = txs
+            .filter(t => t.description.toLowerCase().includes('purchase'))
+            .reduce((sum, t) => sum + Math.abs(parseFloat(t.amount)), 0);
+            
+        return {
+            totalSpent: totalSpent.toFixed(2),
+            bundlesBought: orders.length,
+            referralBonus: '45.00' // Placeholder for now
+        };
     }
 };
