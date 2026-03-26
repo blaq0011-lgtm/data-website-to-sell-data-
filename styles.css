@@ -3,22 +3,22 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --navy: #0f172a;
+  --navy: #000000;
   --blue: #2563eb;
   --blue-light: #fbbf24;
   --green: #22c55e;
   --green-dark: #16a34a;
-  --white: #fef7ef;
-  --gray-50: #fef7ef;
-  --gray-100: #f1f5f9;
-  --gray-200: #e2e8f0;
+  --white: #ffffff;
+  --gray-50: #000000;
+  --gray-100: #111111;
+  --gray-200: #222222;
   --gray-400: #94a3b8;
-  --gray-600: #475569;
+  --gray-600: #cbd5e1;
   --gray-800: #1e293b;
-  --text: #0f172a;
+  --text: #ffffff;
   --radius: 12px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.14);
+  --shadow: 0 4px 24px rgba(255,255,255,0.05);
+  --shadow-lg: 0 8px 40px rgba(255,255,255,0.1);
 }
 
 body {
@@ -87,8 +87,8 @@ nav ul a:hover, nav ul a.active { color: var(--white); }
   text-decoration: none;
   transition: all 0.2s;
 }
-.btn-primary { background: var(--blue-light); color: var(--navy); }
-.btn-primary:hover { background: var(--blue); color: var(--white); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(45,85,245,0.4); }
+.btn-primary { background: var(--blue-light); color: #000; }
+.btn-primary:hover { background: #fff; color: #000; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(251,191,36,0.4); }
 .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.3); }
 .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
 .btn-green { background: var(--green); color: var(--white); }
@@ -102,6 +102,7 @@ nav ul a:hover, nav ul a.active { color: var(--white); }
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 24px;
+  color: #000; /* High contrast black text on white cards */
 }
 
 /* ── BADGE ── */
@@ -197,5 +198,9 @@ footer .footer-links { margin-bottom: 12px; }
 /* Responsive */
 @media (max-width: 768px) {
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  nav ul { display: none; }
+  nav { padding: 0 20px; }
+  nav ul { display: none; } /* Could add a hamburger menu later if needed */
+  .nav-right .btn-outline { display: none; } /* Hide secondary button on very small screens to save space */
+  .section { padding: 40px 0; }
+  .container { padding: 0 16px; }
 }

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Checkout – SmartNet Data</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .checkout-wrap { width: 100%; max-width: 480px; padding: 24px; }
+    
+    .card { background: #0d1117; border: 1.5px solid #1e2d50; border-radius: 18px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    .card-header { text-align: center; margin-bottom: 28px; }
+    .card-header h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+    .card-header p { color: rgba(255,255,255,0.5); font-size: 0.95rem; }
+
+    /* Order details bubble */
+    .order-bubble { background: rgba(59,109,250,0.08); border: 1px solid rgba(59,109,250,0.2); border-radius: 12px; padding: 16px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; }
+    .ob-left { display: flex; flex-direction: column; gap: 4px; }
+    .ob-item { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+    .ob-item strong { color: #fff; margin-left: 4px; }
+    .ob-price { font-size: 1.4rem; font-weight: 900; color: #fbbf24; }
+
+    /* Payment form */
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 8px; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 14px 16px; background: #111827; border: 1.5px solid #1e2d50; border-radius: 10px; color: #fff; font-size: 1rem; outline: none; box-sizing: border-box; transition: 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: #fbbf24; }
+    .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; padding-right: 48px; }
+    
+    .btn-pay { width: 100%; padding: 16px; background: #fbbf24; color: #000; font-weight: 900; font-size: 1.05rem; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-top: 10px; }
+    .btn-pay:hover { background: #f59e0b; transform: translateY(-1px); }
+
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; transition: 0.2s; }
+    .back-link:hover { color: #fff; }
+
+    /* Processing state */
+    .processing { display: none; text-align: center; padding: 30px 0; }
+    .spinner { border: 4px solid rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; border-left-color: #fbbf24; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* USSD Modal */
+    .ussd-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); }
+    .ussd-box { background: #e5e7eb; border-radius: 8px; width: 90%; max-width: 320px; padding: 20px; color: #111; font-family: monospace; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    .ussd-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 12px; }
+    .ussd-text { font-size: 0.95rem; margin-bottom: 16px; line-height: 1.4; color: #333; }
+    .ussd-input { width: 100%; background: transparent; border: none; border-bottom: 2px solid #2563eb; font-size: 1.2rem; padding: 8px 4px; outline: none; margin-bottom: 24px; font-family: monospace; letter-spacing: 4px; text-align: center; }
+    .ussd-actions { display: flex; justify-content: flex-end; gap: 16px; }
+    .ussd-btn { background: none; border: none; font-size: 1rem; font-weight: bold; cursor: pointer; padding: 8px; font-family: monospace; }
+    .ussd-btn.cancel { color: #dc2626; }
+    .ussd-btn.send { color: #2563eb; }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-wrap">
+    <a href="buy-data.html" class="back-link">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Back to bundles
+    </a>
+
+    <div class="card" id="formCard">
+      <div class="card-header">
+        <h2>Payment Details</h2>
+        <p>Enter the mobile money number to pay from</p>
+      </div>
+
+      <div class="order-bubble">
+        <div class="ob-left">
+          <div class="ob-item">Network: <strong id="lblNet">...</strong></div>
+          <div class="ob-item">Bundle: <strong id="lblBundle">...</strong></div>
+          <div class="ob-item">Recipient: <strong id="lblRecepient">...</strong></div>
+        </div>
+        <div class="ob-price">GH₵ <span id="lblPrice">0.00</span></div>
+      </div>
+
+      <form onsubmit="handlePayment(event)">
+        <div class="form-group">
+          <label>Payment Network</label>
+          <select id="payNet" required>
+            <option value="" disabled selected>Select network</option>
+            <option value="MTN Mobile Money">MTN Mobile Money</option>
+            <option value="Telecel Cash">Telecel Cash</option>
+            <option value="AirtelTigo Money">AirtelTigo Money</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Mobile Money Number</label>
+          <input type="tel" id="payPhone" placeholder="Enter number (e.g. 024XXXXXXX)" required autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn-pay" id="payBtn">Pay Now</button>
+      </form>
+    </div>
+
+    <!-- Processing State -->
+    <div class="card processing" id="processingCard">
+      <div class="spinner"></div>
+      <h3 style="margin-bottom:8px;">Authorizing Payment...</h3>
+      <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; line-height:1.5;">Please wait while we confirm your transaction with the provider.</p>
+    </div>
+  </div>
+
+  <!-- Simulated USSD Prompt -->
+  <div class="ussd-overlay" id="ussdModal">
+    <div class="ussd-box">
+      <div class="ussd-title">Mobile Money Approval</div>
+      <div class="ussd-text">Authorize payment of <strong>GH₵ <span id="ussdPrice">0.00</span></strong> to SmartNet Data for <span id="ussdBundle">Data</span> bundle. <br><br>Enter PIN to confirm:</div>
+      <input type="password" class="ussd-input" id="ussdPin" maxlength="4" placeholder="****" autocomplete="off" inputmode="numeric">
+      <div class="ussd-actions">
+        <button class="ussd-btn cancel" onclick="cancelUssd()">CANCEL</button>
+        <button class="ussd-btn send" onclick="submitPin()">SEND</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const network = params.get('network') || 'Unknown';
+    const bundle = params.get('bundle') || 'N/A';
+    const price = params.get('price') || '0.00';
+    const recepient = params.get('phone') || 'Unknown';
+
+    // Populate order details
+    document.getElementById('lblNet').textContent = network;
+    document.getElementById('lblBundle').textContent = bundle;
+    document.getElementById('lblPrice').textContent = price;
+    document.getElementById('lblRecepient').textContent = recepient;
+
+    // Handle form submission
+    function handlePayment(e) {
+      e.preventDefault();
+      const payNet = document.getElementById('payNet').value;
+      const payPhone = document.getElementById('payPhone').value;
+
+      if (!payNet || !payPhone) return;
+
+      // Show USSD Modal prompt
+      document.getElementById('ussdPrice').textContent = price;
+      document.getElementById('ussdBundle').textContent = bundle;
+      document.getElementById('ussdPin').value = '';
+      document.getElementById('ussdModal').style.display = 'flex';
+      document.getElementById('ussdPin').focus();
+    }
+
+    function cancelUssd() {
+      document.getElementById('ussdModal').style.display = 'none';
+    }
+
+    function submitPin() {
+      const pin = document.getElementById('ussdPin').value;
+      if (pin.length < 4) {
+        alert("Please enter a valid 4-digit PIN.");
+        return;
+      }
+
+      // Hide USSD, show processing spinner
+      document.getElementById('ussdModal').style.display = 'none';
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('processingCard').style.display = 'block';
+
+      // Simulate API call delay then redirect to dashboard showing success
+      setTimeout(() => {
+        window.location.href = 'dashboard.html?purchase=success';
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

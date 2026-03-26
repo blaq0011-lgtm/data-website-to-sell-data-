@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SmartNet Data – Buy Data Instantly, Anytime</title>
-  <meta name="description" content="Buy mobile data bundles for MTN, Vodafone and AirtelTigo instantly at the best prices in Ghana.">
+  <meta name="description" content="Buy mobile data bundles for MTN, Telecel and AirtelTigo instantly at the best prices in Ghana.">
   <link rel="stylesheet" href="styles.css">
   <script src="auth.js"></script>
   <style>
     /* HERO */
     .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, #112145 60%, #0d2a5e 100%);
+      background: #000;
       padding: 80px 5% 60px;
       color: var(--white);
       position: relative;
@@ -44,11 +44,11 @@
 
     /* QUICK BUY CARD */
     .quick-buy {
-      background: var(--white);
+      background: #fff;
       border-radius: 16px;
       padding: 28px;
       box-shadow: var(--shadow-lg);
-      color: var(--text);
+      color: #000;
     }
     .quick-buy h3 { font-size: 1rem; font-weight: 700; margin-bottom: 20px; }
     .network-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
@@ -59,12 +59,11 @@
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
-      background: var(--white);
+      background: #fff;
+      color: #000;
       transition: all 0.18s;
     }
-    .net-btn.mtn.active, .net-btn.mtn:hover { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
-    .net-btn.vodafone.active, .net-btn.vodafone:hover { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
-    .net-btn.airteltigo.active, .net-btn.airteltigo:hover { border-color: var(--blue-light); background: #eff3ff; color: var(--blue); }
+    .net-btn.active, .net-btn:hover { border-color: var(--yellow); background: var(--yellow); color: #000; }
     .quick-buy .form-group { margin-bottom: 14px; }
     .price-hint { font-size: 0.8rem; color: var(--gray-400); margin-top: 4px; }
 
@@ -75,9 +74,9 @@
 
     /* SECTION HEADER */
     .section-head { margin-bottom: 32px; }
-    .section-head h2 { font-size: 1.7rem; font-weight: 800; margin-bottom: 6px; }
-    .section-head p { color: var(--gray-600); font-size: 0.95rem; }
-    .section-head a { font-size: 0.85rem; color: var(--blue-light); font-weight: 600; text-decoration: none; float: right; }
+    .section-head h2 { font-size: 1.7rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
+    .section-head p { color: #888; font-size: 0.95rem; }
+    .section-head a { font-size: 0.85rem; color: var(--yellow); font-weight: 600; text-decoration: none; float: right; }
 
     /* BUNDLE CARDS */
     .bundle-hero {
@@ -118,6 +117,15 @@
     .author-sub { font-size: 0.8rem; color: var(--gray-400); }
     .trust-banner { text-align: center; margin-top: 40px; color: var(--gray-600); font-size: 0.9rem; font-weight: 600; }
     .trust-banner span { font-size: 1.6rem; font-weight: 800; color: var(--blue-light); display: block; }
+
+    /* Mobile Responsive Hooks */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero { padding: 40px 5%; text-align: center; }
+      .hero p { margin: 0 auto 32px auto; }
+      .hero-actions { justify-content: center; }
+      .hero h1 { font-size: 2.2rem; }
+    }
   </style>
 </head>
 <body>
@@ -139,7 +147,7 @@
   <div class="hero-inner">
     <div>
       <h1>Buy Data <span>Instantly,</span> Anytime.</h1>
-      <p>Ghana's fastest data bundle platform. Affordable MTN, Vodafone & AirtelTigo bundles delivered in seconds.</p>
+      <p>Ghana's fastest data bundle platform. Affordable MTN, Telecel &amp; AirtelTigo bundles delivered in seconds.</p>
       <div class="hero-actions">
         <a href="buy-data.html" class="btn btn-primary btn-lg">Buy Data Now</a>
         <a href="login.html#signup" class="btn btn-outline btn-lg">Get Started Free</a>
@@ -147,9 +155,9 @@
       <div class="trusted" style="text-align:left; margin-top:32px;">
         <div style="margin-bottom:8px;">Trusted by 30,000+ Users</div>
         <div class="trusted-logos">
-          <div class="tlogo">MTN</div>
-          <div class="tlogo">Vodafone</div>
-          <div class="tlogo">AirtelTigo</div>
+          <div class="tlogo"><svg width="28" height="28" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="22" fill="#FFCC00"/><text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle" fill="#003399" font-weight="900" font-size="11" font-family="Arial,sans-serif" letter-spacing="0.5">MTN</text></svg> MTN</div>
+          <div class="tlogo"><svg width="28" height="28" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="22" fill="#CC0000"/><text x="50%" y="38%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="900" font-size="7" font-family="Arial,sans-serif">telecel</text><path d="M10 28 Q16 22 22 26 Q28 30 34 24" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg> Telecel</div>
+          <div class="tlogo"><svg width="28" height="28" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><clipPath id="cp3"><circle cx="22" cy="22" r="22"/></clipPath><circle cx="22" cy="22" r="22" fill="#E2001A"/><rect x="22" y="0" width="22" height="44" fill="#00509E" clip-path="url(#cp3)"/><text x="50%" y="44%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="900" font-size="9" font-family="Arial,sans-serif">Airtel</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" fill="#FFD700" font-weight="900" font-size="9" font-family="Arial,sans-serif">Tigo</text></svg> AirtelTigo</div>
         </div>
       </div>
     </div>
@@ -158,9 +166,9 @@
     <div class="quick-buy">
       <h3>⚡ Quick Top-Up</h3>
       <div class="network-row">
-        <button class="net-btn mtn active" onclick="selectNet(this,'mtn')">MTN</button>
-        <button class="net-btn vodafone" onclick="selectNet(this,'vodafone')">Vodafone</button>
-        <button class="net-btn airteltigo" onclick="selectNet(this,'airteltigo')">AirtelTigo</button>
+        <button class="net-btn mtn active" onclick="selectNet(this,'mtn')" style="display:flex;align-items:center;gap:6px;"><svg width="20" height="20" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="22" fill="#FFCC00"/><text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle" fill="#003399" font-weight="900" font-size="11" font-family="Arial,sans-serif" letter-spacing="0.5">MTN</text></svg> MTN</button>
+        <button class="net-btn telecel" onclick="selectNet(this,'telecel')" style="display:flex;align-items:center;gap:6px;"><svg width="20" height="20" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="22" fill="#CC0000"/><text x="50%" y="38%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="900" font-size="7" font-family="Arial,sans-serif">telecel</text><path d="M10 28 Q16 22 22 26 Q28 30 34 24" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg> Telecel</button>
+        <button class="net-btn airteltigo" onclick="selectNet(this,'airteltigo')" style="display:flex;align-items:center;gap:6px;"><svg width="20" height="20" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><clipPath id="cp4"><circle cx="22" cy="22" r="22"/></clipPath><circle cx="22" cy="22" r="22" fill="#E2001A"/><rect x="22" y="0" width="22" height="44" fill="#00509E" clip-path="url(#cp4)"/><text x="50%" y="44%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="900" font-size="9" font-family="Arial,sans-serif">Airtel</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" fill="#FFD700" font-weight="900" font-size="9" font-family="Arial,sans-serif">Tigo</text></svg> AirtelTigo</button>
       </div>
       <div class="form-group">
         <label>Phone Number</label>
@@ -228,7 +236,7 @@
         <div class="name">Nite &amp; Date</div>
         <div class="price">GHC 45.00</div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
-          <span class="badge badge-red">Vodafone</span>
+          <span class="badge badge-red">Telecel</span>
           <button class="add-btn">+</button>
         </div>
       </div>
@@ -254,7 +262,7 @@
         <div class="stars">★★★★★</div>
         <p style="font-size:0.9rem; color:var(--gray-600);">"The prices here beat everywhere else. I save 20% every month using SmartNet Data."</p>
         <div class="author">Akua Boateng</div>
-        <div class="author-sub">Vodafone subscriber · Kumasi</div>
+        <div class="author-sub">Telecel subscriber · Kumasi</div>
       </div>
       <div class="testimonial-card">
         <div class="stars">★★★★☆</div>

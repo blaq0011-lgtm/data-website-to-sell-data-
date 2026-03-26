@@ -8,11 +8,11 @@
   <script src="auth.js"></script>
   <script src="data.js"></script>
   <style>
-    body { background: var(--gray-100); }
-    .dash-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 64px); }
-    .sidebar { background: #1a1a1a; padding: 24px 14px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid #222; }
+    body { background: #000; color: #fff; }
+    .dash-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 64px); background: #000; }
+    .sidebar { background: #000; padding: 24px 14px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid #111; }
     .side-link { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 12px; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; position: relative; }
-    .side-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .side-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
     .side-link.active { background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
     .side-link svg { width: 20px; height: 20px; opacity: 0.7; }
     .side-link.active svg { opacity: 1; color: #fbbf24; }
@@ -47,17 +47,17 @@
     /* BUY DATA TAB STYLES */
     .buy-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
     .network-selector { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
-    .net-card { flex: 1; min-width: 80px; border: 2px solid var(--gray-200); border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--white); }
-    .net-card:hover { border-color: var(--blue-light); }
-    .net-card.active { border-color: var(--blue-light); background: #eff3ff; }
+    .net-card { flex: 1; min-width: 80px; border: 2px solid var(--gray-200); border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fff; color: #000; }
+    .net-card:hover { border-color: var(--yellow); }
+    .net-card.active { border-color: var(--yellow); background: var(--yellow); color: #000; }
     .net-card .net-logo { font-size: 1.5rem; display: block; margin-bottom: 4px; }
-    .net-card .net-name { font-size: 0.75rem; font-weight: 700; }
+    .net-card .net-name { font-size: 0.75rem; font-weight: 700; color: #000; }
     .bundle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .b-card { border: 2px solid var(--gray-200); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; background: var(--white); position: relative; }
-    .b-card:hover, .b-card.selected { border-color: var(--blue-light); background: #eff3ff; }
-    .b-card.selected::after { content: '✓'; position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; background: var(--blue-light); color: white; border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
-    .b-card .size { font-size: 1.2rem; font-weight: 800; color: var(--text); }
-    .b-card .price { font-size: 0.95rem; font-weight: 700; color: var(--blue-light); margin-top: 4px; }
+    .b-card { border: 2px solid var(--gray-200); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; background: #fff; color: #000; position: relative; }
+    .b-card:hover, .b-card.selected { border-color: var(--yellow); background: var(--yellow); color: #000; }
+    .b-card.selected::after { content: '✓'; position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; background: #000; color: #fff; border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+    .b-card .size { font-size: 1.2rem; font-weight: 800; color: #000; }
+    .b-card .price { font-size: 0.95rem; font-weight: 700; color: #000; margin-top: 4px; }
     .summary-card-small { background: var(--navy); color: var(--white); border-radius: 16px; padding: 24px; }
     .sum-row-sm { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
 
@@ -86,9 +86,27 @@
     .tx-empty { padding: 60px; text-align: center; color: rgba(255,255,255,0.2); }
 
     .tx-footer { padding: 20px; border-top: 1px solid #222; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(255,255,255,0.4); }
-    .pagination { display: flex; gap: 8px; }
     .page-btn { width: 32px; height: 32px; border-radius: 8px; background: #111; border: 1px solid #222; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* Mobile Responsive Hooks */
+    @media (max-width: 992px) {
+      .dash-layout { grid-template-columns: 1fr; }
+      .sidebar { flex-direction: row; flex-wrap: wrap; justify-content: center; border-right: none; border-bottom: 1px solid #222; padding: 16px; }
+      .side-link { flex: 1; min-width: 120px; justify-content: center; flex-direction: column; gap: 6px; padding: 10px; font-size: 0.8rem; text-align: center; }
+      .sidebar-label, .sidebar-divider, .badge-new { display: none; }
+      .dash-main { padding: 20px; }
+      .qa-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-row { grid-template-columns: 1fr; }
+      .tx-filters { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .wallet-card { flex-direction: column; align-items: stretch; padding: 20px; }
+      .wallet-actions { justify-content: space-between; margin-top: 24px; }
+      .tx-wallet-card { min-width: 100%; display: flex; }
+      .dark-table th, .dark-table td { padding: 12px; font-size: 0.8rem; }
+      .tx-empty { padding: 30px 10px; }
+    }
   </style>
 </head>
 <body>
@@ -144,7 +162,7 @@
   </aside>
 
   <main class="dash-main">
-    <div id="section-overview" style="background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+    <div id="section-overview" style="background: #000; padding: 40px; margin: -32px; min-height: 100%;">
       <div class="tx-header">
         <h1 class="tx-title">Good morning, <span id="userNameHello">User</span> 👋</h1>
         <p class="tx-sub">Here's your account overview for today.</p>
@@ -154,7 +172,7 @@
       <div class="tx-wallet-card" style="margin-bottom: 30px;">
         <div>
           <div class="tx-wallet-label">Total Wallet Balance</div>
-          <div class="tx-wallet-value">₵1,240.50</div>
+          <div class="tx-wallet-value">₵0.00</div>
         </div>
         <div class="tx-wallet-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -208,7 +226,7 @@
     </div>
 
     <!-- TRANSACTIONS SECTION -->
-    <div id="section-transactions" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+    <div id="section-transactions" style="display:none; background: #000; padding: 40px; margin: -32px; min-height: 100%;">
       <div class="tx-header">
         <h1 class="tx-title">Transaction History</h1>
         <p class="tx-sub">View your comprehensive wallet activity.</p>
@@ -309,7 +327,7 @@
     </div>
 
     <!-- NOTIFICATIONS SECTION -->
-    <div id="section-notifications" style="display:none; background: #0b0b0b; padding: 40px; margin: -32px; min-height: 100%;">
+    <div id="section-notifications" style="display:none; background: #000; padding: 40px; margin: -32px; min-height: 100%;">
       <div class="tx-header">
         <h1 class="tx-title">Notifications</h1>
         <p class="tx-sub">Stay updated with your latest account activity.</p>
@@ -330,13 +348,13 @@
             <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:16px;">1. Select Network</h3>
             <div class="network-selector">
               <div class="net-card mtn active" onclick="selectNet(this)">
-                <span class="net-logo">🟡</span><div class="net-name">MTN</div>
+                <span class="net-logo"><svg width="38" height="38" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none"><circle cx="22" cy="22" r="22" fill="#FFCC00"/><text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle" fill="#003399" font-weight="900" font-size="11" font-family="Arial,sans-serif" letter-spacing="0.5">MTN</text></svg></span><div class="net-name">MTN</div>
               </div>
-              <div class="net-card vodafone" onclick="selectNet(this)">
-                <span class="net-logo">🔴</span><div class="net-name">Vodafone</div>
+              <div class="net-card telecel" onclick="selectNet(this)">
+                <span class="net-logo"><svg width="38" height="38" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none"><circle cx="22" cy="22" r="22" fill="#CC0000"/><text x="50%" y="38%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="900" font-size="7.5" font-family="Arial,sans-serif" letter-spacing="0.3">telecel</text><path d="M10 28 Q16 22 22 26 Q28 30 34 24" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M10 33 Q16 27 22 31 Q28 35 34 29" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></span><div class="net-name">Telecel</div>
               </div>
               <div class="net-card airteltigo" onclick="selectNet(this)">
-                <span class="net-logo">🔵</span><div class="net-name">AirtelTigo</div>
+                <span class="net-logo"><svg width="38" height="38" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none"><clipPath id="cp2"><circle cx="22" cy="22" r="22"/></clipPath><circle cx="22" cy="22" r="22" fill="#E2001A"/><rect x="22" y="0" width="22" height="44" fill="#00509E" clip-path="url(#cp2)"/><text x="50%" y="44%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-weight="900" font-size="9" font-family="Arial,sans-serif">Airtel</text><text x="50%" y="66%" dominant-baseline="middle" text-anchor="middle" fill="#FFD700" font-weight="900" font-size="9" font-family="Arial,sans-serif">Tigo</text></svg></span><div class="net-name">AirtelTigo</div>
               </div>
             </div>
           </div>
