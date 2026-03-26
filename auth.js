@@ -5,7 +5,7 @@ const auth = {
         const isLoginPage = window.location.pathname.includes('login.html');
         
         if (!user && !isLoginPage) {
-            window.location.href = 'login.html';
+            window.location.href = 'login.html#signup';
         } else if (user && isLoginPage) {
             window.location.href = 'dashboard.html';
         }
